@@ -1,4 +1,6 @@
 import { FlashCard as FlashCardType, CardStatus } from '@/types';
+import CardStatusBadge from './CardStatusBadge';
+import CardActions from './CardActions';
 
 interface FlashCardProps {
     card: FlashCardType;
@@ -16,21 +18,9 @@ export default function FlashCard({
     onMark,
 }: FlashCardProps) {
     return (
-        <div className="flex">
-            {currentStatus !== 'unseen' && (
-                <div
-                    className={`
-          text-sm font-medium px-3 py-1 rounded-full
-          ${
-              currentStatus === 'known'
-                  ? 'bg-green-100 text-green-700'
-                  : 'bg-orange-100 text-orange-700'
-          }
-        `}
-                >
-                    {currentStatus === 'known' ? '✅ Connue' : '🔁 À revoir'}
-                </div>
-            )}
+        <div className="flex  flex-col items-center gap-4 w-full max-w-md">
+            <CardStatusBadge status={currentStatus} />
+
             <div
                 onClick={onFlip}
                 className="relative w-full max-w-md h-64 cursor-pointer perspective-1000"
@@ -60,9 +50,8 @@ export default function FlashCard({
                             <p className="text-3xl font-bold text-center">
                                 {card.answer}
                             </p>
-                            <p className="text-sm mt-6 opacity-70">
-                                Clique pour voir la question
-                            </p>
+
+                            <CardActions onMark={onMark} />
                         </div>
                     </div>
                 </div>
